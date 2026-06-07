@@ -689,29 +689,46 @@ async function fetchReviews() {
   try {
     const res = await fetch('/api/reviews');
     const data = await res.json();
+    
+    // Debugging ke liye: Console mein check karne ke liye data aa kya raha hai
+    console.log("Odoo Data Received:", data);
+
     if (data.success && data.reviews && data.reviews.length > 0) {
-      let reviews = data.reviews;
-      while(reviews.length < 5) {
-        reviews = reviews.concat(reviews);
+      let reviewsList = data.reviews;
+      
+      // Marquee loop smooth chalane ke liye cards duplicate karna
+      while(reviewsList.length < 5) {
+        reviewsList = reviewsList.concat(reviewsList);
       }
+      
       let htmls = '';
-      reviews.forEach(r => {
-        let starCount = parseInt(r.priority) || 1;
+      reviewsList.forEach(r => {
+        // Star priority check (Safe fallback agar field empty ho)
+        let starCount = parseInt(r.priority) || 3; 
         if(starCount > 3) starCount = 3;
         if(starCount < 1) starCount = 1;
         const starsHtml = '★'.repeat(starCount) + '☆'.repeat(3 - starCount);
+        
+        // Fields check (Safe fallback agar Odoo se field ka naam thoda different ho)
+        const reviewText = r.x_review || r.review || 'No review text provided.';
+        const authorName = r.name || r.author || 'Anonymous';
+
         htmls += `
           <div class="testi-card">
             <div class="testi-stars">${starsHtml}</div>
-            <p class="testi-text"><strong>Reviews:</strong> "${r.x_review}"</p>
-            <div class="testi-author"><strong>Name:</strong> ${r.name || 'Anonymous'}</div>
+            <p class="testi-text">"${reviewText}"</p>
+            <div class="testi-author">${authorName}</div>
           </div>
         `;
       });
+      
       track.innerHTML = htmls + htmls;
+    } else {
+      track.innerHTML = `<div style="padding:20px; color:var(--muted);">No reviews available at the moment.</div>`;
     }
   } catch(e) {
-    console.error('Failed to fetch reviews', e);
+    console.error('Failed to fetch reviews:', e);
+    track.innerHTML = `<div style="padding:20px; color:var(--muted);">Failed to load reviews.</div>`;
   }
 }
 fetchReviews();
