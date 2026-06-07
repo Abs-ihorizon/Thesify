@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Thesify — Smart Thesis Solutions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400;0,700;0,900;1,400;1,700&family=Poppins:wght=300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -17,14 +17,11 @@ html{scroll-behavior:smooth;font-size:16px}
 body{
   background:var(--dark);color:var(--text);
   font-family:'Poppins',sans-serif;
-  overflow-x:hidden;cursor:none;
+  overflow-x:hidden;
 }
 a{text-decoration:none;color:inherit}
 
-#cur{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--orange);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.08s;mix-blend-mode:normal}
-#cur2{position:fixed;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,106,0,0.5);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0.12s ease,top 0.12s ease,width 0.3s,height 0.3s}
-
-#c3{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#nav-indicator{position:fixed;top:0;left:0;height:2px;background:var(--orange);z-index:200;width:0%;transition:width 0.1s}
 
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
@@ -41,6 +38,8 @@ nav.scrolled{background:rgba(10,8,6,0.9);border-color:var(--border);backdrop-fil
 .nav-cta:hover{filter:brightness(1.15)}
 
 section{position:relative;z-index:10}
+
+#c3{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
 
 #hero{
   min-height:100vh;display:flex;align-items:center;justify-content:center;
@@ -99,20 +98,19 @@ section{position:relative;z-index:10}
 .stat-num{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:700;color:var(--orange);line-height:1}
 .stat-label{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:6px}
 
-.divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 auto}
-
 #marquee-wrap{padding:24px 0;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(255,106,0,0.03)}
-.marquee-track{display:flex;gap:48px;white-space:nowrap;animation:marquee 22s linear infinite}
+.marquee-track{display:flex;gap:48px;white-space:nowrap;animation:marqueeRun 22s linear infinite}
 .marquee-item{font-size:12px;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:16px}
 .marquee-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+@keyframes marqueeRun{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 #services{padding:120px 48px}
 .section-label{font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
 .section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:700;line-height:1.1;margin-bottom:60px}
 .section-title em{font-style:italic;color:var(--orange)}
 
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
 .service-card{
   padding:40px 36px;background:var(--dark2);border:1px solid var(--border);
   position:relative;overflow:hidden;cursor:pointer;
@@ -182,14 +180,14 @@ section{position:relative;z-index:10}
 
 #testimonials{padding:120px 48px;overflow:hidden}
 .testi-track-wrap{overflow:hidden;margin-top:60px}
-@keyframes marquee {
+@keyframes marqueeTesti {
   0% { transform: translateX(0); }
   100% { transform: translateX(calc(-50% - 12px)); }
 }
-.testi-track{display:flex;gap:24px;width:max-content;animation:marquee 90s linear infinite;}
+.testi-track{display:flex;gap:24px;width:max-content;animation:marqueeTesti 90s linear infinite;}
 .testi-track:hover{animation-play-state:paused;}
 .testi-card{
-  min-width:380px;padding:40px;background:var(--dark2);
+  width:380px;padding:40px;background:var(--dark2);
   border:1px solid var(--border);border-radius:0;flex-shrink:0;position:relative;
 }
 .testi-card::after{
@@ -200,45 +198,9 @@ section{position:relative;z-index:10}
 .testi-stars{color:var(--orange);font-size:14px;margin-bottom:16px;letter-spacing:2px}
 .testi-text{font-size:14px;line-height:1.8;color:var(--muted);margin-bottom:24px;font-style:italic}
 .testi-author{font-weight:600;font-size:13px}
-.testi-role{font-size:11px;color:var(--orange);letter-spacing:0.1em;margin-top:2px}
-.testi-nav{display:flex;gap:12px;margin-top:36px}
-.testi-btn{
-  width:44px;height:44px;border:1px solid var(--border);background:transparent;
-  color:var(--text);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;
-  transition:background 0.2s,border-color 0.2s;
-}
-.testi-btn:hover{background:var(--orange);border-color:var(--orange)}
-
-#pricing{padding:120px 48px;background:linear-gradient(135deg,#0d0a07,#0a0806)}
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1000px;margin:60px auto 0}
-.price-card{
-  padding:48px 36px;background:var(--dark2);border:1px solid var(--border);
-  position:relative;transition:transform 0.3s,border-color 0.3s;
-}
-.price-card.featured{
-  border-color:var(--orange);background:linear-gradient(135deg,rgba(255,106,0,0.06),var(--dark2));
-  transform:scale(1.04);
-}
-.price-badge{
-  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
-  background:var(--orange);color:#fff;font-size:10px;font-weight:700;
-  letter-spacing:0.15em;text-transform:uppercase;padding:5px 18px;
-}
-.price-plan{font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.price-amount{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;color:var(--orange);line-height:1;margin-bottom:4px}
-.price-unit{font-size:13px;color:var(--muted);margin-bottom:32px}
-.price-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
-.price-features li{font-size:13px;color:var(--muted);display:flex;gap:10px;align-items:flex-start}
-.price-features li::before{content:'✦';color:var(--orange);font-size:10px;margin-top:3px;flex-shrink:0}
-.price-btn{
-  width:100%;padding:14px;background:transparent;border:1px solid var(--border);
-  color:var(--text);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
-  cursor:pointer;transition:background 0.2s,border-color 0.2s;
-}
-.price-btn:hover,.price-card.featured .price-btn{background:var(--orange);border-color:var(--orange)}
 
 #why{padding:120px 48px}
-.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:60px}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:60px}
 .why-item{
   padding:40px;background:var(--dark2);border:1px solid var(--border);
   display:flex;gap:20px;align-items:flex-start;transition:background 0.3s;
@@ -262,14 +224,6 @@ section{position:relative;z-index:10}
 .cta-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,5rem);font-weight:700;line-height:1.05;margin-bottom:24px}
 .cta-title em{font-style:italic;color:var(--orange)}
 .cta-sub{font-size:16px;color:var(--muted);max-width:480px;margin:0 auto 48px;line-height:1.7}
-.cta-form{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:500px;margin:0 auto}
-.cta-input{
-  flex:1;min-width:220px;padding:16px 20px;background:rgba(255,255,255,0.05);
-  border:1px solid var(--border);color:var(--text);font-size:14px;font-family:'Poppins',sans-serif;
-  outline:none;transition:border-color 0.2s;
-}
-.cta-input:focus{border-color:var(--orange)}
-.cta-input::placeholder{color:var(--muted)}
 
 footer{
   padding:60px 48px 36px;border-top:1px solid var(--border);
@@ -288,12 +242,10 @@ footer{
 .reveal{opacity:0;transform:translateY(40px);transition:opacity 0.8s,transform 0.8s cubic-bezier(0.16,1,0.3,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-#progress{position:fixed;top:0;left:0;height:2px;background:var(--orange);z-index:200;transition:width 0.1s}
-
 @media(max-width:768px){
   nav{padding:18px 20px}
   .nav-links{display:none}
-  #services,#process,#testimonials,#pricing,#why,#cta{padding:80px 20px}
+  #services,#process,#testimonials,#why,#cta{padding:80px 20px}
   .process-grid{grid-template-columns:1fr;gap:40px}
   .process-visual{height:280px}
   .why-grid{grid-template-columns:1fr}
@@ -307,9 +259,7 @@ footer{
 </head>
 <body>
 
-<div id="progress"></div>
-<div id="cur"></div>
-<div id="cur2"></div>
+<div id="nav-indicator"></div>
 <canvas id="c3"></canvas>
 
 <nav id="nav">
@@ -436,9 +386,9 @@ footer{
         <div class="process-ring pr1"></div>
         <div class="process-ring pr2"></div>
         <div class="process-ring pr3"></div>
-        <div class="orbit-dot" style="position:absolute;top:50%;left:50%;margin:-5px 0 0 -5px"></div>
-        <div class="orbit-dot" style="position:absolute;top:50%;left:50%;margin:-3px 0 0 -3px"></div>
-        <div class="orbit-dot" style="position:absolute;top:50%;left:50%;margin:-4px 0 0 -4px"></div>
+        <div class="orbit-dot"></div>
+        <div class="orbit-dot"></div>
+        <div class="orbit-dot"></div>
         <div class="process-center">T</div>
       </div>
       <div class="steps reveal">
@@ -468,57 +418,7 @@ footer{
   <h2 class="section-title reveal">Trusted by<br/><em>Thousands</em></h2>
   <div class="testi-track-wrap">
     <div class="testi-track" id="ttrack">
-      
-
-    </div>
-  </div>
-</section>
-
-<section id="pricing" style="display: none;">
-  <div class="section-label reveal" style="text-align:center">Transparent Pricing</div>
-  <h2 class="section-title reveal" style="text-align:center">Simple, Honest<br/><em>Rates</em></h2>
-  <div class="pricing-grid">
-    <div class="price-card reveal">
-      <div class="price-plan">Standard</div>
-      <div class="price-amount">$18</div>
-      <div class="price-unit">per page · 14-day delivery</div>
-      <ul class="price-features">
-        <li>Up to 50 pages</li>
-        <li>Plagiarism report included</li>
-        <li>2 revisions</li>
-        <li>Basic formatting (APA/MLA)</li>
-        <li>Email support</li>
-      </ul>
-      <button class="price-btn">Get Started</button>
-    </div>
-    <div class="price-card featured reveal">
-      <div class="price-badge">Most Popular</div>
-      <div class="price-plan">Professional</div>
-      <div class="price-amount">$28</div>
-      <div class="price-unit">per page · 7-day delivery</div>
-      <ul class="price-features">
-        <li>Unlimited pages</li>
-        <li>Turnitin report + Grammarly</li>
-        <li>Unlimited revisions</li>
-        <li>All citation styles</li>
-        <li>Direct writer access</li>
-        <li>Priority support 24/7</li>
-      </ul>
-      <button class="price-btn">Get Started</button>
-    </div>
-    <div class="price-card reveal">
-      <div class="price-plan">Express</div>
-      <div class="price-amount">$45</div>
-      <div class="price-unit">per page · 48-hr delivery</div>
-      <ul class="price-features">
-        <li>Rush delivery guaranteed</li>
-        <li>Senior PhD writer assigned</li>
-        <li>Unlimited revisions</li>
-        <li>All formats + bibliography</li>
-        <li>Dedicated project manager</li>
-      </ul>
-      <button class="price-btn">Get Started</button>
-    </div>
+      </div>
   </div>
 </section>
 
@@ -572,13 +472,14 @@ footer{
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+// ==================== THREE.JS SETUP ====================
 const canvas = document.getElementById('c3');
 const renderer = new THREE.WebGLRenderer({canvas,alpha:true,antialias:false});
 renderer.setSize(window.innerWidth,window.innerHeight);
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 
 const scene = new THREE.Scene();
-const cam = new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,1000);
+const cam = new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.1,1000);
 cam.position.z = 6;
 
 const N = 1200;
@@ -615,113 +516,7 @@ scene.add(bookLines);
 
 const gridGeo = new THREE.BufferGeometry();
 const gridPts = [];
-for(let x=-8;x<=8;x+=1.5)for(let y=-5;y<=5;y+=1.5)gridPts.push(x,y,-2);
+for(let gx=-8;gx<=8;gx+=1.5) for(let gy=-5;gy<=5;gy+=1.5) gridPts.push(gx,gy,-2);
 gridGeo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(gridPts),3));
 const gridMat = new THREE.PointsMaterial({color:0xFF6A00,size:0.022,transparent:true,opacity:0.12});
-scene.add(new THREE.Points(gridGeo,gridMat));
-
-let mx=0,my=0,t=0;
-document.addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-0.5)*2;my=-(e.clientY/innerHeight-0.5)*2});
-
-function tick(){
-  requestAnimationFrame(tick);
-  t+=0.004;
-  pts.rotation.y = t*0.06 + mx*0.05;
-  pts.rotation.x = t*0.03 + my*0.03;
-  bookLines.rotation.y = mx*0.08;
-  bookLines.rotation.x = my*0.04;
-  cam.position.x += (mx*0.4 - cam.position.x)*0.03;
-  cam.position.y += (my*0.3 - cam.position.y)*0.03;
-  cam.lookAt(0,0,0);
-  renderer.render(scene,cam);
-}
-tick();
-
-window.addEventListener('resize',()=>{
-  cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();
-  renderer.setSize(innerWidth,innerHeight);
-});
-
-const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
-let cx=0,cy=0,cx2=0,cy2=0;
-document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY});
-(function loop(){
-  cx2+=(cx-cx2)*0.14;cy2+=(cy-cy2)*0.14;
-  cur.style.left=cx+'px';cur.style.top=cy+'px';
-  cur2.style.left=cx2+'px';cur2.style.top=cy2+'px';
-  requestAnimationFrame(loop);
-})();
-
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>{
-  nav.classList.toggle('scrolled',scrollY>60);
-  const total=document.body.scrollHeight-innerHeight;
-  document.getElementById('progress').style.width=(scrollY/total*100)+'%';
-});
-
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
-},{threshold:0.15});
-document.querySelectorAll('.reveal').forEach((el,i)=>{
-  el.style.transitionDelay=(i%4)*0.1+'s';
-  obs.observe(el);
-});
-
-function countUp(el,target){
-  const suffix = target===98?'%':'+';
-  let n=0;const step=Math.ceil(target/60);
-  const iv=setInterval(()=>{n=Math.min(n+step,target);el.textContent=n.toLocaleString()+suffix;if(n>=target)clearInterval(iv)},28);
-}
-const countObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      document.querySelectorAll('[data-count]').forEach(el=>countUp(el,+el.dataset.count));
-      countObs.disconnect();
-    }
-  });
-},{threshold:0.5});
-const heroSection=document.getElementById('hero');
-if(heroSection)countObs.observe(heroSection);
-
-const track=document.getElementById('ttrack');
-
-async function fetchReviews() {
-  try {
-    const res = await fetch('/api/reviews');
-    const data = await res.json();
-    if (data.success && data.reviews && data.reviews.length > 0) {
-      let reviews = data.reviews;
-      while(reviews.length < 5) {
-        reviews = reviews.concat(reviews);
-      }
-      let htmls = '';
-      reviews.forEach(r => {
-        let starCount = parseInt(r.priority) || 1;
-        if(starCount > 3) starCount = 3;
-        if(starCount < 1) starCount = 1;
-        const starsHtml = '★'.repeat(starCount) + '☆'.repeat(3 - starCount);
-        htmls += `
-          <div class="testi-card">
-            <div class="testi-stars">${starsHtml}</div>
-            <p class="testi-text"><strong>Reviews:</strong> "${r.x_review}"</p>
-            <div class="testi-author"><strong>Name:</strong> ${r.name || 'Anonymous'}</div>
-          </div>
-        `;
-      });
-      track.innerHTML = htmls + htmls;
-    }
-  } catch(e) {
-    console.error('Failed to fetch reviews', e);
-  }
-}
-fetchReviews();
-</script>
-<a href="https://wa.me/923312301403" target="_blank" class="whatsapp-btn">
-<svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M20.52 3.449C18.24 1.145 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.895c-.002 2.1.554 4.146 1.611 5.945L0 24l6.335-1.652c1.733 1.054 3.693 1.609 5.698 1.61h.004c6.58 0 11.939-5.332 11.943-11.893 0-3.171-1.242-6.15-3.46-8.616z" fill="#25D366"/>
-<path d="M12.041 21.996c-1.785 0-3.53-.48-5.056-1.385l-.36-.214-3.75.975.996-3.645-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.46-9.884 9.932-9.884 2.654 0 5.145 1.03 7.02 2.9 1.874 1.869 2.906 4.35 2.905 6.99-.002 5.45-4.462 9.887-9.942 9.887l-.001.01z" fill="#25D366"/>
-<path d="M17.474 14.336c-.297-.149-1.758-.867-2.031-.967-.27-.099-.47-.149-.667.149-.198.297-.768.967-.94 1.165-.173.198-.347.223-.644.074-1.408-.707-2.457-1.488-3.411-3.109-.244-.415.242-.387.818-1.536.099-.198.05-.371-.025-.52-.074-.149-.667-1.61-.914-2.204-.24-.582-.486-.5-.667-.509h-.569c-.198 0-.52.074-.792.371-.272.297-1.04 1.016-1.04 2.478 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487 1.93.834 2.651.905 3.528.761.642-.105 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.569-.347z" fill="#FFF"/>
-</svg>
-</a>
-</body>
-</html>
+scene.add
