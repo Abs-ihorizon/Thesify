@@ -26,7 +26,7 @@ async function rpcCall(service, method, args) {
         id: Math.floor(Math.random() * 1000)
       }),
       // Vercel serverless function ko dynamic connection error se bachane ke liye timeout/agent logic inside fetch
-      signal: AbortSignal.timeout(8000) 
+      signal: AbortSignal.timeout(25000) 
     });
 
     if (!res.ok) {
