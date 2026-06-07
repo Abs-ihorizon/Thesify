@@ -12,21 +12,35 @@ const username = 'admin';
 const password = 'admin';
 
 async function rpcCall(service, method, args) {
-  const res = await fetch(`${odooUrl}/jsonrpc`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      jsonrpc: "2.0",
-      method: "call",
-      params: { service, method, args },
-      id: Math.floor(Math.random() * 1000)
-    })
-  });
-  const data = await res.json();
-  if (data.error) throw new Error(JSON.stringify(data.error));
-  return data.result;
-}
+  try {
+    const res = await fetch(`${odooUrl}/jsonrpc`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        method: "call",
+        params: { service, method, args },
+        id: Math.floor(Math.random() * 1000)
+      }),
+      // Vercel serverless function ko dynamic connection error se bachane ke liye timeout/agent logic inside fetch
+      signal: AbortSignal.timeout(8000) 
+    });
 
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const data = await res.json();
+    if (data.error) throw new Error(JSON.stringify(data.error));
+    return data.result;
+  } catch (err) {
+    console.error(`RPC Call to Odoo Failed [${service} -> ${method}]:`, err.message);
+    throw new Error(`Odoo connection error: ${err.message}`);
+  }
+}
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, phone, subject, message, budget } = req.body;
