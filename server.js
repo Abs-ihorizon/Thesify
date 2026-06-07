@@ -151,6 +151,12 @@ app.get('/api/reviews', async (req, res) => {
   }
 });
 
+// Yeh route aapke frontend (index.html) ko load karega
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Server listener (is ke upar paste karna hai)
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
