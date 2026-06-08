@@ -26,19 +26,90 @@ a{text-decoration:none;color:inherit}
 
 #c3{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
 
+/* ── NAV ── */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:22px 48px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:74px;display:flex;align-items:center;justify-content:space-between;
   border-bottom:1px solid transparent;transition:border-color 0.4s,background 0.4s;
 }
-nav.scrolled{background:rgba(10,8,6,0.9);border-color:var(--border);backdrop-filter:blur(12px)}
-.nav-logo{display:flex;align-items:center;text-decoration:none;height:74px;}
-.nav-logo img{height:74px;width:auto;object-fit:contain;}
-.nav-links{display:flex;gap:32px;list-style:none}
-.nav-links a{text-decoration:none;color:var(--muted);font-size:13px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s}
+nav.scrolled{background:rgba(10,8,6,0.95);border-color:var(--border);backdrop-filter:blur(12px)}
+
+.nav-logo{display:flex;align-items:center;text-decoration:none;height:60px;flex-shrink:0}
+.nav-logo img{height:60px;width:auto;object-fit:contain}
+
+/* Desktop links */
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;white-space:nowrap}
 .nav-links a:hover{color:var(--text)}
-.nav-cta{background:var(--orange);color:#fff;height:44px;padding:0 32px;font-size:13px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;border:none;cursor:pointer;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);transition:filter 0.2s;display:flex;align-items:center;justify-content:center;}
+
+.nav-right{display:flex;align-items:center;gap:24px;flex-shrink:0}
+.nav-phone{font-size:13px;font-weight:600;color:var(--orange);display:flex;align-items:center;gap:7px;white-space:nowrap}
+.nav-phone svg{flex-shrink:0}
+.nav-cta{
+  background:var(--orange);color:#fff;height:40px;padding:0 24px;
+  font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  border:none;cursor:pointer;white-space:nowrap;
+  clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);
+  transition:filter 0.2s;display:flex;align-items:center;justify-content:center;
+}
 .nav-cta:hover{filter:brightness(1.15)}
+
+/* Hamburger */
+.hamburger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:40px;height:40px;background:transparent;border:1px solid var(--border);
+  cursor:pointer;padding:8px;flex-shrink:0;transition:border-color 0.2s;
+}
+.hamburger:hover{border-color:var(--orange)}
+.hamburger span{
+  display:block;width:100%;height:1.5px;background:var(--text);
+  transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),opacity 0.25s;
+  transform-origin:center;
+}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* Mobile drawer */
+.mobile-menu{
+  position:fixed;top:74px;left:0;right:0;z-index:99;
+  background:rgba(10,8,6,0.98);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transform:translateY(-8px);opacity:0;pointer-events:none;
+  transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),opacity 0.3s;
+  padding:0;
+}
+.mobile-menu.open{transform:translateY(0);opacity:1;pointer-events:all}
+.mobile-menu-inner{padding:20px 24px 28px;display:flex;flex-direction:column;gap:0}
+
+.mobile-link{
+  display:flex;align-items:center;padding:14px 0;
+  border-bottom:1px solid rgba(255,106,0,0.1);
+  font-size:13px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);transition:color 0.2s,padding-left 0.2s;
+  text-decoration:none;
+}
+.mobile-link:hover{color:var(--text);padding-left:6px}
+.mobile-link:last-of-type{border-bottom:none}
+.mobile-link .ml-num{font-size:10px;color:var(--orange);margin-right:12px;opacity:0.7}
+
+.mobile-bottom{
+  margin-top:20px;padding-top:20px;border-top:1px solid var(--border);
+  display:flex;flex-direction:column;gap:12px;
+}
+.mobile-phone{
+  display:flex;align-items:center;gap:10px;
+  font-size:15px;font-weight:600;color:var(--orange);
+  text-decoration:none;
+}
+.mobile-cta{
+  background:var(--orange);color:#fff;padding:14px 24px;
+  font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  border:none;cursor:pointer;text-align:center;
+  clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);
+  transition:filter 0.2s;display:block;
+}
+.mobile-cta:hover{filter:brightness(1.15)}
 
 section{position:relative;z-index:10}
 
@@ -201,13 +272,6 @@ section{position:relative;z-index:10}
 .testi-text{font-size:14px;line-height:1.8;color:var(--muted);margin-bottom:24px;font-style:italic}
 .testi-author{font-weight:600;font-size:13px}
 .testi-role{font-size:11px;color:var(--orange);letter-spacing:0.1em;margin-top:2px}
-.testi-nav{display:flex;gap:12px;margin-top:36px}
-.testi-btn{
-  width:44px;height:44px;border:1px solid var(--border);background:transparent;
-  color:var(--text);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;
-  transition:background 0.2s,border-color 0.2s;
-}
-.testi-btn:hover{background:var(--orange);border-color:var(--orange)}
 
 #pricing{padding:120px 48px;background:linear-gradient(135deg,#0d0a07,#0a0806)}
 .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:1000px;margin:60px auto 0}
@@ -290,9 +354,16 @@ footer{
 
 #progress{position:fixed;top:0;left:0;height:2px;background:var(--orange);z-index:200;transition:width 0.1s}
 
-@media(max-width:768px){
-  nav{padding:18px 20px}
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:0 24px;height:68px}
   .nav-links{display:none}
+  .nav-phone{display:none}
+  .nav-cta{display:none}
+  .hamburger{display:flex}
+  .mobile-menu{top:68px}
+}
+@media(max-width:768px){
   #services,#process,#testimonials,#pricing,#why,#cta{padding:80px 20px}
   .process-grid{grid-template-columns:1fr;gap:40px}
   .process-visual{height:280px}
@@ -300,6 +371,7 @@ footer{
   footer{grid-template-columns:1fr;gap:24px}
   .footer-right{text-align:left}
 }
+
 .whatsapp-btn{position:fixed;bottom:24px;right:24px;background:transparent;width:60px;height:60px;display:flex;align-items:center;justify-content:center;z-index:999;transition:transform 0.3s;}
 .whatsapp-btn:hover{transform:scale(1.1) translateY(-4px);}
 .whatsapp-btn svg{filter:drop-shadow(0 8px 16px rgba(255,106,0,0.5));}
@@ -312,10 +384,13 @@ footer{
 <div id="cur2"></div>
 <canvas id="c3"></canvas>
 
+<!-- ── NAVIGATION ── -->
 <nav id="nav">
   <a href="index.html" class="nav-logo">
     <img src="logo.png" alt="Thesify Logo">
   </a>
+
+  <!-- Desktop links -->
   <ul class="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="index.html#services">Services</a></li>
@@ -324,16 +399,40 @@ footer{
     <li><a href="submit-review.html">Submit Review</a></li>
     <li><a href="index.html#why">Why Us</a></li>
   </ul>
-  <div style="display:flex; align-items:center; gap:32px;">
-    <a href="tel:+923312301403" style="font-size:14px; font-weight:600; color:var(--orange); text-decoration:none; display:flex; align-items:center; gap:8px;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+
+  <!-- Desktop right -->
+  <div class="nav-right">
+    <a href="tel:+923312301403" class="nav-phone">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
       +92 331 2301 403
     </a>
-    <button class="nav-cta" onclick="window.location.href='contact.html'">
-      Get Started
-    </button>
+    <button class="nav-cta" onclick="window.location.href='contact.html'">Get Started</button>
   </div>
+
+  <!-- Hamburger (mobile only) -->
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- Mobile Drawer -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-inner">
+    <a href="index.html" class="mobile-link"><span class="ml-num">01</span>Home</a>
+    <a href="index.html#services" class="mobile-link"><span class="ml-num">02</span>Services</a>
+    <a href="index.html#process" class="mobile-link"><span class="ml-num">03</span>Process</a>
+    <a href="index.html#testimonials" class="mobile-link"><span class="ml-num">04</span>Reviews</a>
+    <a href="submit-review.html" class="mobile-link"><span class="ml-num">05</span>Submit Review</a>
+    <a href="index.html#why" class="mobile-link"><span class="ml-num">06</span>Why Us</a>
+    <div class="mobile-bottom">
+      <a href="tel:+923312301403" class="mobile-phone">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        +92 331 2301 403
+      </a>
+      <a href="contact.html" class="mobile-cta">Get Free Consultation</a>
+    </div>
+  </div>
+</div>
 
 <section id="hero">
   <div>
@@ -467,14 +566,11 @@ footer{
   <div class="section-label reveal">Client Reviews</div>
   <h2 class="section-title reveal">Trusted by<br/><em>Thousands</em></h2>
   <div class="testi-track-wrap">
-    <div class="testi-track" id="ttrack">
-      
-
-    </div>
+    <div class="testi-track" id="ttrack"></div>
   </div>
 </section>
 
-<section id="pricing" style="display: none;">
+<section id="pricing" style="display:none">
   <div class="section-label reveal" style="text-align:center">Transparent Pricing</div>
   <h2 class="section-title reveal" style="text-align:center">Simple, Honest<br/><em>Rates</em></h2>
   <div class="pricing-grid">
@@ -483,11 +579,7 @@ footer{
       <div class="price-amount">$18</div>
       <div class="price-unit">per page · 14-day delivery</div>
       <ul class="price-features">
-        <li>Up to 50 pages</li>
-        <li>Plagiarism report included</li>
-        <li>2 revisions</li>
-        <li>Basic formatting (APA/MLA)</li>
-        <li>Email support</li>
+        <li>Up to 50 pages</li><li>Plagiarism report included</li><li>2 revisions</li><li>Basic formatting (APA/MLA)</li><li>Email support</li>
       </ul>
       <button class="price-btn">Get Started</button>
     </div>
@@ -497,12 +589,7 @@ footer{
       <div class="price-amount">$28</div>
       <div class="price-unit">per page · 7-day delivery</div>
       <ul class="price-features">
-        <li>Unlimited pages</li>
-        <li>Turnitin report + Grammarly</li>
-        <li>Unlimited revisions</li>
-        <li>All citation styles</li>
-        <li>Direct writer access</li>
-        <li>Priority support 24/7</li>
+        <li>Unlimited pages</li><li>Turnitin report + Grammarly</li><li>Unlimited revisions</li><li>All citation styles</li><li>Direct writer access</li><li>Priority support 24/7</li>
       </ul>
       <button class="price-btn">Get Started</button>
     </div>
@@ -511,11 +598,7 @@ footer{
       <div class="price-amount">$45</div>
       <div class="price-unit">per page · 48-hr delivery</div>
       <ul class="price-features">
-        <li>Rush delivery guaranteed</li>
-        <li>Senior PhD writer assigned</li>
-        <li>Unlimited revisions</li>
-        <li>All formats + bibliography</li>
-        <li>Dedicated project manager</li>
+        <li>Rush delivery guaranteed</li><li>Senior PhD writer assigned</li><li>Unlimited revisions</li><li>All formats + bibliography</li><li>Dedicated project manager</li>
       </ul>
       <button class="price-btn">Get Started</button>
     </div>
@@ -572,86 +655,53 @@ footer{
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
+// ── THREE.JS BACKGROUND ──
 const canvas = document.getElementById('c3');
 const renderer = new THREE.WebGLRenderer({canvas,alpha:true,antialias:false});
 renderer.setSize(window.innerWidth,window.innerHeight);
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-
 const scene = new THREE.Scene();
 const cam = new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,1000);
 cam.position.z = 6;
-
 const N = 1200;
 const pos = new Float32Array(N*3);
 const cols = new Float32Array(N*3);
 for(let i=0;i<N;i++){
-  pos[i*3]   = (Math.random()-0.5)*18;
-  pos[i*3+1] = (Math.random()-0.5)*12;
-  pos[i*3+2] = (Math.random()-0.5)*5;
-  const isOrange = Math.random()>0.7;
-  cols[i*3]   = isOrange ? 1 : 0.9;
-  cols[i*3+1] = isOrange ? 0.42 : 0.86;
-  cols[i*3+2] = isOrange ? 0 : 0.78;
+  pos[i*3]=(Math.random()-0.5)*18;pos[i*3+1]=(Math.random()-0.5)*12;pos[i*3+2]=(Math.random()-0.5)*5;
+  const isOrange=Math.random()>0.7;
+  cols[i*3]=isOrange?1:0.9;cols[i*3+1]=isOrange?0.42:0.86;cols[i*3+2]=isOrange?0:0.78;
 }
-const geo = new THREE.BufferGeometry();
+const geo=new THREE.BufferGeometry();
 geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
 geo.setAttribute('color',new THREE.BufferAttribute(cols,3));
-const mat = new THREE.PointsMaterial({size:0.035,vertexColors:true,transparent:true,opacity:0.55});
-const pts = new THREE.Points(geo,mat);
+const mat=new THREE.PointsMaterial({size:0.035,vertexColors:true,transparent:true,opacity:0.55});
+const pts=new THREE.Points(geo,mat);
 scene.add(pts);
-
-const bookGeo = new THREE.BufferGeometry();
-const bookVerts = new Float32Array([
-  -2,-1.5,0,  -0.1,-0.5,0,
-   2,-1.5,0,   0.1,-0.5,0,
-  -0.1,-0.5,0, 0.1,-0.5,0,
-  -1.8,0.8,0, -0.1,-0.5,0,
-   1.8,0.8,0,  0.1,-0.5,0,
-]);
+const bookGeo=new THREE.BufferGeometry();
+const bookVerts=new Float32Array([-2,-1.5,0,-0.1,-0.5,0,2,-1.5,0,0.1,-0.5,0,-0.1,-0.5,0,0.1,-0.5,0,-1.8,0.8,0,-0.1,-0.5,0,1.8,0.8,0,0.1,-0.5,0]);
 bookGeo.setAttribute('position',new THREE.BufferAttribute(bookVerts,3));
-const bookMat = new THREE.LineBasicMaterial({color:0xFF6A00,transparent:true,opacity:0.08});
-const bookLines = new THREE.LineSegments(bookGeo,bookMat);
+const bookMat=new THREE.LineBasicMaterial({color:0xFF6A00,transparent:true,opacity:0.08});
+const bookLines=new THREE.LineSegments(bookGeo,bookMat);
 scene.add(bookLines);
-
-const gridGeo = new THREE.BufferGeometry();
-const gridPts = [];
+const gridGeo=new THREE.BufferGeometry();
+const gridPts=[];
 for(let x=-8;x<=8;x+=1.5)for(let y=-5;y<=5;y+=1.5)gridPts.push(x,y,-2);
 gridGeo.setAttribute('position',new THREE.BufferAttribute(new Float32Array(gridPts),3));
-const gridMat = new THREE.PointsMaterial({color:0xFF6A00,size:0.022,transparent:true,opacity:0.12});
+const gridMat=new THREE.PointsMaterial({color:0xFF6A00,size:0.022,transparent:true,opacity:0.12});
 scene.add(new THREE.Points(gridGeo,gridMat));
-
 let mx=0,my=0,t=0;
 document.addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-0.5)*2;my=-(e.clientY/innerHeight-0.5)*2});
-
-function tick(){
-  requestAnimationFrame(tick);
-  t+=0.004;
-  pts.rotation.y = t*0.06 + mx*0.05;
-  pts.rotation.x = t*0.03 + my*0.03;
-  bookLines.rotation.y = mx*0.08;
-  bookLines.rotation.x = my*0.04;
-  cam.position.x += (mx*0.4 - cam.position.x)*0.03;
-  cam.position.y += (my*0.3 - cam.position.y)*0.03;
-  cam.lookAt(0,0,0);
-  renderer.render(scene,cam);
-}
+function tick(){requestAnimationFrame(tick);t+=0.004;pts.rotation.y=t*0.06+mx*0.05;pts.rotation.x=t*0.03+my*0.03;bookLines.rotation.y=mx*0.08;bookLines.rotation.x=my*0.04;cam.position.x+=(mx*0.4-cam.position.x)*0.03;cam.position.y+=(my*0.3-cam.position.y)*0.03;cam.lookAt(0,0,0);renderer.render(scene,cam)}
 tick();
+window.addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
 
-window.addEventListener('resize',()=>{
-  cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();
-  renderer.setSize(innerWidth,innerHeight);
-});
-
+// ── CURSOR ──
 const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
 let cx=0,cy=0,cx2=0,cy2=0;
 document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY});
-(function loop(){
-  cx2+=(cx-cx2)*0.14;cy2+=(cy-cy2)*0.14;
-  cur.style.left=cx+'px';cur.style.top=cy+'px';
-  cur2.style.left=cx2+'px';cur2.style.top=cy2+'px';
-  requestAnimationFrame(loop);
-})();
+(function loop(){cx2+=(cx-cx2)*0.14;cy2+=(cy-cy2)*0.14;cur.style.left=cx+'px';cur.style.top=cy+'px';cur2.style.left=cx2+'px';cur2.style.top=cy2+'px';requestAnimationFrame(loop)})();
 
+// ── NAV SCROLL ──
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>{
   nav.classList.toggle('scrolled',scrollY>60);
@@ -659,80 +709,79 @@ window.addEventListener('scroll',()=>{
   document.getElementById('progress').style.width=(scrollY/total*100)+'%';
 });
 
+// ── HAMBURGER ──
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{
+  const open=hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+});
+// Close on link tap
+mobileMenu.querySelectorAll('a').forEach(link=>{
+  link.addEventListener('click',()=>{
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow='';
+  });
+});
+// Close on outside click
+document.addEventListener('click',e=>{
+  if(!nav.contains(e.target)&&!mobileMenu.contains(e.target)){
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow='';
+  }
+});
+
+// ── REVEAL ──
 const obs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
 },{threshold:0.15});
-document.querySelectorAll('.reveal').forEach((el,i)=>{
-  el.style.transitionDelay=(i%4)*0.1+'s';
-  obs.observe(el);
-});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4)*0.1+'s';obs.observe(el)});
 
+// ── COUNTUP ──
 function countUp(el,target){
-  const suffix = target===98?'%':'+';
+  const suffix=target===98?'%':'+';
   let n=0;const step=Math.ceil(target/60);
   const iv=setInterval(()=>{n=Math.min(n+step,target);el.textContent=n.toLocaleString()+suffix;if(n>=target)clearInterval(iv)},28);
 }
 const countObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      document.querySelectorAll('[data-count]').forEach(el=>countUp(el,+el.dataset.count));
-      countObs.disconnect();
-    }
-  });
+  entries.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('[data-count]').forEach(el=>countUp(el,+el.dataset.count));countObs.disconnect()}});
 },{threshold:0.5});
 const heroSection=document.getElementById('hero');
 if(heroSection)countObs.observe(heroSection);
 
+// ── REVIEWS ──
 const track=document.getElementById('ttrack');
-
-async function fetchReviews() {
-  try {
-    const res = await fetch('/api/reviews');
-    const data = await res.json();
-    
-    // Debugging ke liye: Console mein check karne ke liye data aa kya raha hai
-    console.log("Odoo Data Received:", data);
-
-    if (data.success && data.reviews && data.reviews.length > 0) {
-      let reviewsList = data.reviews;
-      
-      // Marquee loop smooth chalane ke liye cards duplicate karna
-      while(reviewsList.length < 5) {
-        reviewsList = reviewsList.concat(reviewsList);
-      }
-      
-      let htmls = '';
-      reviewsList.forEach(r => {
-        // Star priority check (Safe fallback agar field empty ho)
-        let starCount = parseInt(r.priority) || 3; 
-        if(starCount > 3) starCount = 3;
-        if(starCount < 1) starCount = 1;
-        const starsHtml = '★'.repeat(starCount) + '☆'.repeat(3 - starCount);
-        
-        // Fields check (Safe fallback agar Odoo se field ka naam thoda different ho)
-        const reviewText = r.x_review || r.review || 'No review text provided.';
-        const authorName = r.name || r.author || 'Anonymous';
-
-        htmls += `
-          <div class="testi-card">
-            <div class="testi-stars">${starsHtml}</div>
-            <p class="testi-text">"${reviewText}"</p>
-            <div class="testi-author">${authorName}</div>
-          </div>
-        `;
+async function fetchReviews(){
+  try{
+    const res=await fetch('/api/reviews');
+    const data=await res.json();
+    if(data.success&&data.reviews&&data.reviews.length>0){
+      let reviewsList=data.reviews;
+      while(reviewsList.length<5){reviewsList=reviewsList.concat(reviewsList)}
+      let htmls='';
+      reviewsList.forEach(r=>{
+        let starCount=parseInt(r.priority)||3;
+        if(starCount>3)starCount=3;if(starCount<1)starCount=1;
+        const starsHtml='★'.repeat(starCount)+'☆'.repeat(3-starCount);
+        const reviewText=r.x_review||r.review||'No review text provided.';
+        const authorName=r.name||r.author||'Anonymous';
+        htmls+=`<div class="testi-card"><div class="testi-stars">${starsHtml}</div><p class="testi-text">"${reviewText}"</p><div class="testi-author">${authorName}</div></div>`;
       });
-      
-      track.innerHTML = htmls + htmls;
+      track.innerHTML=htmls+htmls;
     } else {
-      track.innerHTML = `<div style="padding:20px; color:var(--muted);">No reviews available at the moment.</div>`;
+      track.innerHTML=`<div style="padding:20px;color:var(--muted)">No reviews available at the moment.</div>`;
     }
-  } catch(e) {
-    console.error('Failed to fetch reviews:', e);
-    track.innerHTML = `<div style="padding:20px; color:var(--muted);">Failed to load reviews.</div>`;
+  }catch(e){
+    console.error('Failed to fetch reviews:',e);
+    track.innerHTML=`<div style="padding:20px;color:var(--muted)">Failed to load reviews.</div>`;
   }
 }
 fetchReviews();
 </script>
+
 <a href="https://wa.me/923312301403" target="_blank" class="whatsapp-btn">
 <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M20.52 3.449C18.24 1.145 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.895c-.002 2.1.554 4.146 1.611 5.945L0 24l6.335-1.652c1.733 1.054 3.693 1.609 5.698 1.61h.004c6.58 0 11.939-5.332 11.943-11.893 0-3.171-1.242-6.15-3.46-8.616z" fill="#25D366"/>
